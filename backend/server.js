@@ -37,20 +37,37 @@ const app = express();
 // Create HTTP server
 export const server = http.createServer(app);
 
+// Helper function to get allowed origins based on environment
+const getAllowedOrigins = () => {
+  const baseOrigins = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://192.168.1.15:3000',
+    'http://192.168.1.15:5173',
+    'http://192.168.1.88:3000',
+    'http://192.168.1.88:5173',
+    /^http:\/\/192\.168\.1\.\d{1,3}(?::\d+)?$/
+  ];
+  
+  // Add production origins if environment variables are set
+  if (process.env.FRONTEND_URL) {
+    baseOrigins.push(process.env.FRONTEND_URL);
+  }
+  
+  if (process.env.PRODUCTION_ORIGINS) {
+    const prodOrigins = process.env.PRODUCTION_ORIGINS.split(',').map(origin => origin.trim());
+    baseOrigins.push(...prodOrigins);
+  }
+  
+  return baseOrigins;
+};
+
 // Create Socket.IO server
 export const io = new Server(server, {
   cors: {
-    origin: [
-      'http://localhost:3000',
-      'http://127.0.0.1:3000',
-      'http://localhost:5173',
-      'http://127.0.0.1:5173',
-      'http://192.168.1.15:3000',
-      'http://192.168.1.15:5173',
-      'http://192.168.1.88:3000',
-      'http://192.168.1.88:5173',
-      /^http:\/\/192\.168\.1\.\d{1,3}(?::\d+)?$/
-    ],
+    origin: getAllowedOrigins(),
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -69,16 +86,7 @@ app.use(helmet());
 
 // CORS configuration
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'http://192.168.1.15:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'http://192.168.1.15:3000',
-    'http://192.168.1.43:3000',
-    /^http:\/\/192\.168\.1\.\d{1,3}(?::\d+)?$/
-  ],
+  origin: getAllowedOrigins(),
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -248,10 +256,17 @@ const startServer = async () => {
 
     // Initialize Firebase Admin
     try {
-      initializeFirebase();
-      console.log('Firebase Admin initialized');
+      // Check if Firebase configuration is available
+      if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
+        const { initializeFirebase } = await import('./services/pushNotificationService.js');
+        initializeFirebase();
+        console.log('Firebase Admin initialized');
+      } else {
+        console.log('Firebase configuration not found - push notifications disabled');
+      }
     } catch (error) {
       console.error('Error initializing Firebase Admin:', error.message);
+      console.log('Push notifications will be disabled');
     }
 
     // Start server
