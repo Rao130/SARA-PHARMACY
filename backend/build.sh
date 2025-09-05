@@ -3,5 +3,7 @@
 # exit on error
 set -o errexit
 
-npm install
-echo "Backend dependencies installed successfully"
+echo "Installing production dependencies..."
+npm ci --only=production
+
+echo "Backend build completed successfully"
