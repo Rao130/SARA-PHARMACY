@@ -1,0 +1,17 @@
+{
+  "name": "Sara Pharmacy",
+  "short_name": "SaraPharma",
+  "description": "Your trusted online pharmacy for all healthcare needs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#4f46e5",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

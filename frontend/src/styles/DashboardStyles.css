@@ -1,0 +1,195 @@
+/* Dashboard Dark Theme Styles */
+
+/* Global animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation classes */
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.6s ease-out;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a6fd8, #6a4190);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .dashboard-header {
+    text-align: center;
+    padding: 0 1rem;
+  }
+  
+  .stats-card-hover {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .dashboard-grid {
+    spacing: 2;
+  }
+  
+  .stats-card-hover {
+    height: auto;
+    min-height: 120px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .dashboard-container {
+    padding: 2rem;
+  }
+}
+
+/* Dark theme enhancements */
+.dark-theme-bg {
+  background-color: #0a0a0a;
+}
+
+.dark-theme-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme-text {
+  color: #ffffff;
+}
+
+.dark-theme-subtitle {
+  color: #b0b0b0;
+}
+
+/* Shimmer effect for dark theme loading */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #1a1a2e 0%,
+    #16213e 50%,
+    #1a1a2e 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Gradient text for dark theme */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Ripple effect for buttons */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.ripple:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Card hover effects for dark theme */
+.stats-card-hover {
+  transition: all 0.3s ease-in-out;
+}
+
+.stats-card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Button enhancements */
+.action-button {
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
