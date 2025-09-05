@@ -4,6 +4,6 @@
 set -o errexit
 
 echo "Installing production dependencies..."
-npm ci --only=production
+npm install --only=production
 
 echo "Backend build completed successfully"

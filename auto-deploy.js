@@ -117,7 +117,7 @@ console.log(`   - Click "New +" → "Web Service"`);
 console.log(`   - Connect repository: sara-pharmacy`);
 console.log(`   - Name: ${projectName}-backend`);
 console.log(`   - Root Directory: backend`);
-console.log(`   - Build Command: npm install`);
+console.log(`   - Build Command: npm install --only=production`);
 console.log(`   - Start Command: npm start\n`);
 
 console.log('3. 📋 Backend Environment Variables:');

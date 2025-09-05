@@ -4,7 +4,7 @@
       "type": "web",
       "name": "sara-pharmacy-backend",
       "env": "node",
-      "buildCommand": "cd backend && npm ci --only=production",
+      "buildCommand": "cd backend && npm install --only=production",
       "startCommand": "cd backend && npm start",
       "envVars": [
         {
