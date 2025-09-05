@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "builds": [
+    {
+      "src": "backend/package.json",
+      "use": "@now/node",
+      "config": {
+        "includeFiles": ["backend/**"]
+      }
+    },
+    {
+      "src": "frontend/package.json", 
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "frontend/dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/dist/index.html"
+    }
+  ]
+}

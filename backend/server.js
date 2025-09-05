@@ -30,6 +30,7 @@ import deviceRoutes from './routes/devices.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import deliveryPartnerRoutes from './routes/deliveryPartner.js';
 import connectDB from './config/db.js';
+import { initializeFirebase } from './services/pushNotificationService.js';
 
 // Initialize Express
 const app = express();
@@ -59,6 +60,11 @@ const getAllowedOrigins = () => {
   if (process.env.PRODUCTION_ORIGINS) {
     const prodOrigins = process.env.PRODUCTION_ORIGINS.split(',').map(origin => origin.trim());
     baseOrigins.push(...prodOrigins);
+  }
+  
+  // Add Render.com domains
+  if (process.env.RENDER_EXTERNAL_HOSTNAME) {
+    baseOrigins.push(`https://${process.env.RENDER_EXTERNAL_HOSTNAME}`);
   }
   
   return baseOrigins;
@@ -256,17 +262,10 @@ const startServer = async () => {
 
     // Initialize Firebase Admin
     try {
-      // Check if Firebase configuration is available
-      if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
-        const { initializeFirebase } = await import('./services/pushNotificationService.js');
-        initializeFirebase();
-        console.log('Firebase Admin initialized');
-      } else {
-        console.log('Firebase configuration not found - push notifications disabled');
-      }
+      initializeFirebase();
+      console.log('Firebase Admin initialized');
     } catch (error) {
       console.error('Error initializing Firebase Admin:', error.message);
-      console.log('Push notifications will be disabled');
     }
 
     // Start server
