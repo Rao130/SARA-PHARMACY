@@ -1,5 +1,5 @@
-
-# 🔧 MongoDB Atlas Quick Setup Guide
+  
+  # 🔧 MongoDB Atlas Quick Setup Guide
 
 ## Step 1: Create MongoDB Atlas Account
 1. Go to https://cloud.mongodb.com
@@ -44,3 +44,35 @@ mongodb+srv://sarapharmacy:BxYTae5hW34OKR0Z@sara-pharmacy.xxxxx.mongodb.net/sara
 - Password: BxYTae5hW34OKR0Z
 - Database: sara-pharmacy
 - JWT Secret: BxYTae5hW34OKR0Z9UUlusMcbpv2gx2bDdJdQWTtIdJfHSWLUCYuNpspq7ub9tIH
+
+## Securely storing credentials and connecting Render
+
+1. NEVER commit your real credentials to the repository. Use environment variables.
+2. Create a local `.env` from the provided `.env.example` and fill in values:
+
+```text
+cp .env.example .env
+# then edit .env to add your values
+```
+
+3. On Render (for each service):
+   - Open the service (backend web service or frontend static site) in the Render dashboard.
+   - Go to the "Environment" (or "Environment Variables") section.
+   - Add `MONGODB_URI` with the full Atlas connection string (including username/password and database name).
+   - Add `JWT_SECRET` (a long random secret) and other required keys like `PORT` if needed.
+
+4. Example `MONGODB_URI` format (replace placeholders):
+
+```
+mongodb+srv://sarapharmacy:YOUR_PASSWORD@sara-pharmacy.xxxxx.mongodb.net/sara-pharmacy?retryWrites=true&w=majority
+```
+
+5. After setting env vars in Render, trigger a new deploy (click "Manual Deploy" or push a new commit) so the service picks up the variables.
+
+6. Security note: If the credentials shown earlier were ever published, rotate the database user password in Atlas and update the Render env var with the new password.
+
+7. For local development use the `.env` file. The project already reads `process.env.MONGODB_URI` in `backend/config/db.js`.
+
+If you want, I can:
+- create a safe `.env` locally (you'll need to paste secrets), or
+- guide you step-by-step through adding environment variables in the Render dashboard.
