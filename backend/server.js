@@ -174,6 +174,14 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Root endpoint for basic availability check
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'SARA Pharmacy Backend Running Successfully'
+  });
+});
+
 // Debug endpoint to list available routes
 app.get('/api/debug/routes', (req, res) => {
   const routes = [];
