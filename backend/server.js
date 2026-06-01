@@ -51,6 +51,9 @@ const getAllowedOrigins = () => {
     'http://192.168.1.88:5173',
     /^http:\/\/192\.168\.1\.\d{1,3}(?::\d+)?$/
   ];
+
+  // Add common production frontend host (Vercel example)
+  baseOrigins.push('https://your-frontend.vercel.app');
   
   // Add production origins if environment variables are set
   if (process.env.FRONTEND_URL) {
