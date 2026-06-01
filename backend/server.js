@@ -52,8 +52,9 @@ const getAllowedOrigins = () => {
     /^http:\/\/192\.168\.1\.\d{1,3}(?::\d+)?$/
   ];
 
-  // Add production frontend host
+  // Add production frontend hosts
   baseOrigins.push('https://sara-pharmacy-4.onrender.com');
+  baseOrigins.push('https://sara-pharmacy.vercel.app');
   
   // Add production origins if environment variables are set
   if (process.env.FRONTEND_URL) {
